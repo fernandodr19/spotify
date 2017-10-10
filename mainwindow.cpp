@@ -8,12 +8,12 @@
 #include <QLabel>
 #include <QPlainTextEdit>
 
-
 MainWindow::MainWindow(QWidget *parent) :
-    QScrollArea(parent),
-    isGranted(false)
+    QScrollArea(parent)
 {
     setWidgetResizable(true);
+    setMinimumWidth(800);
+    setMinimumHeight(600);
     setFrameShape(QFrame::NoFrame);
 
     QWidget *proxyWidget = new QWidget;
@@ -22,8 +22,10 @@ MainWindow::MainWindow(QWidget *parent) :
     m_gridLayout = new QGridLayout;
     proxyWidget->setLayout(m_gridLayout);
 
-    m_gridLayout->addWidget(new QLabel("123"),0,0);
-    m_gridLayout->addWidget(new QPlainTextEdit(), 1, 0);
+    m_plainText = new QPlainTextEdit();
+
+    m_gridLayout->addWidget(new QLabel("Spotify"),0,0);
+    m_gridLayout->addWidget(m_plainText, 1, 0);
 
     spotify.setReplyHandler(new QOAuthHttpServerReplyHandler(8080, this));
     spotify.setAuthorizationUrl(QUrl("https://accounts.spotify.com/authorize"));
@@ -38,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&spotify, &QOAuth2AuthorizationCodeFlow::granted,
             this, &MainWindow::granted);
 
-    spotify.grant();//fernandodr19;
+    spotify.grant();
 }
 
 MainWindow::~MainWindow()
@@ -48,8 +50,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::granted ()
 {
-    QString token = spotify.token();
-    isGranted = true;
     getUserInfo();
 }
 
@@ -65,13 +65,14 @@ void MainWindow::getUserInfo()
             return;
         }
         const auto data = reply->readAll();
-        qDebug() << data;
+        m_plainText->appendPlainText(data);
 
         const auto document = QJsonDocument::fromJson(data);
         const auto root = document.object();
-        userName = root.value("id").toString();
+        m_user.id = root.value("id").toString();
+        m_user.country = root.value("country").toString();
 
-        qDebug() << "Username: " << userName;
+        m_plainText->appendPlainText("Username: " + m_user.id + " from " + m_user.country);
 
         reply->deleteLater();
         getPlayLists();
@@ -80,9 +81,9 @@ void MainWindow::getUserInfo()
 
 void MainWindow::getPlayLists()
 {
-    if (userName.length() == 0) return;
+    if (m_user.id.length() == 0) return;
 
-    QUrl u("https://api.spotify.com/v1/users/" + userName + "/playlists");
+    QUrl u("https://api.spotify.com/v1/users/" + m_user.id + "/playlists");
 
     auto reply = spotify.get(u);
 
@@ -97,7 +98,18 @@ void MainWindow::getPlayLists()
         const auto document = QJsonDocument::fromJson(data);
         const auto root = document.object();
 
-        qDebug() << data;
+        m_plainText->appendPlainText(data);
+
+        for(const QJsonValue& item : root.value("items").toArray()) {
+            Playlist playList;
+            playList.setId(item.toObject().value("id").toString());
+            playList.setName(item.toObject().value("name").toString());
+            m_playlists.push_back(playList);
+        }
+
+        for(Playlist p : m_playlists)
+            qDebug() << p.getName() << p.getId();
+
 
         reply->deleteLater();
     });

@@ -6,10 +6,16 @@
 #include "playlist.h"
 
 class QGridLayout;
+class QPlainTextEdit;
 
 namespace Ui {
 class MainWindow;
 }
+
+struct User {
+    QString id;
+    QString country;
+};
 
 class MainWindow : public QScrollArea
 {
@@ -30,9 +36,10 @@ private:
     void getPlayLists();
 
     QGridLayout *m_gridLayout;
+    QPlainTextEdit *m_plainText;
+
     QOAuth2AuthorizationCodeFlow spotify;
-    bool isGranted;
-    QString userName;
+    User m_user;
     QVector<Playlist> m_playlists;
 };
 
