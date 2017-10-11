@@ -69,10 +69,10 @@ void MainWindow::getUserInfo()
 
         const auto document = QJsonDocument::fromJson(data);
         const auto root = document.object();
-        m_user.id = root.value("id").toString();
-        m_user.country = root.value("country").toString();
+        m_user.setId(root.value("id").toString());
+        m_user.setCountry(root.value("country").toString());
 
-        m_plainText->appendPlainText("Username: " + m_user.id + " from " + m_user.country);
+        m_plainText->appendPlainText("Username: " + m_user.getId() + " from " + m_user.getCountry());
 
         reply->deleteLater();
         getPlayLists();
@@ -81,9 +81,10 @@ void MainWindow::getUserInfo()
 
 void MainWindow::getPlayLists()
 {
-    if (m_user.id.length() == 0) return;
+    if (m_user.getId().isEmpty())
+        return;
 
-    QUrl u("https://api.spotify.com/v1/users/" + m_user.id + "/playlists");
+    QUrl u("https://api.spotify.com/v1/users/" + m_user.getId() + "/playlists");
 
     auto reply = spotify.get(u);
 
@@ -100,18 +101,24 @@ void MainWindow::getPlayLists()
 
         m_plainText->appendPlainText(data);
 
+        QVector<Playlist> playlists = m_user.getPlaylists();
         for(const QJsonValue& item : root.value("items").toArray()) {
             Playlist playList;
             playList.setId(item.toObject().value("id").toString());
             playList.setName(item.toObject().value("name").toString());
-            m_playlists.push_back(playList);
+            playlists.push_back(playList);
         }
 
-        for(Playlist p : m_playlists)
+        for(Playlist p : playlists)
             qDebug() << p.getName() << p.getId();
 
 
         reply->deleteLater();
+        getTracks();
     });
+}
+
+void MainWindow::getTracks()
+{
 
 }

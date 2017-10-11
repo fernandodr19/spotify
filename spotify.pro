@@ -25,7 +25,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-        playlist.cpp
+        playlist.cpp \
+    track.cpp \
+    user.cpp
 
 HEADERS  += mainwindow.h \
     playlist.h \
+    track.h \
+    user.h

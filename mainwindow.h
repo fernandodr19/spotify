@@ -3,6 +3,7 @@
 
 #include <QScrollArea>
 #include <QOAuth2AuthorizationCodeFlow>
+#include "user.h"
 #include "playlist.h"
 
 class QGridLayout;
@@ -11,11 +12,6 @@ class QPlainTextEdit;
 namespace Ui {
 class MainWindow;
 }
-
-struct User {
-    QString id;
-    QString country;
-};
 
 class MainWindow : public QScrollArea
 {
@@ -26,7 +22,6 @@ public:
     ~MainWindow();
 
 private slots:
-
     void granted();
 
 private:
@@ -34,13 +29,13 @@ private:
 
     void getUserInfo();
     void getPlayLists();
+    void getTracks();
 
     QGridLayout *m_gridLayout;
     QPlainTextEdit *m_plainText;
 
     QOAuth2AuthorizationCodeFlow spotify;
     User m_user;
-    QVector<Playlist> m_playlists;
 };
 
 #endif // MAINWINDOW_H

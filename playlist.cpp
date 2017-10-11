@@ -4,3 +4,8 @@ Playlist::Playlist()
 {
 
 }
+
+void Playlist::removeTrack(QString id)
+{
+
+}
