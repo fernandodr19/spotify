@@ -11,6 +11,7 @@ public:
     const QString& getId() { return m_id; }
     const QString& getCountry() { return m_country; }
     QVector<Playlist>& getPlaylists() { return m_playlists; }
+    Playlist getPlayListById(const QString id);
 
     void setId(const QString& id) { m_id = id; }
     void setCountry(const QString country) { m_country = country; }

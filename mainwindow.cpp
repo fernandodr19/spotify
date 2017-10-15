@@ -185,6 +185,6 @@ void MainWindow::getTracks()
 
 void MainWindow::showInterface()
 {
-    m_spotifyView = new SpotifyView(this);
+    m_spotifyView = new SpotifyView(m_user, this);
     m_gridLayout->addWidget(m_spotifyView, 2, 0);
 }

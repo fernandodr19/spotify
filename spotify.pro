@@ -31,7 +31,7 @@ SOURCES += main.cpp\
     spotifyview.cpp \
     fancytabwidget.cpp \
     userview.cpp \
-    playlistview.cpp
+    tracksview.cpp
 
 HEADERS  += mainwindow.h \
     playlist.h \
@@ -40,4 +40,4 @@ HEADERS  += mainwindow.h \
     spotifyview.h \
     fancytabwidget.h \
     userview.h \
-    playlistview.h
+    tracksview.h

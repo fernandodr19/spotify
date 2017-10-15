@@ -1,10 +1,10 @@
 #include "spotifyview.h"
 #include "userview.h"
-#include "playlistview.h"
+#include "tracksview.h"
 
-SpotifyView::SpotifyView(QWidget *parent) :
-    FancyTabWidget(parent)
+SpotifyView::SpotifyView(User user, QWidget *parent) :
+    m_user(user), FancyTabWidget(parent)
 {
-    insertTab(new UserView(this), tr("My account"), "user");
-    insertTab(new PlaylistView(this), tr("Playlists"), "playlist");
+    insertTab(new UserView(m_user, this), tr("My account"), "user");
+    insertTab(new TracksView(m_user, this), tr("All tracks"), "tracks");
 }
