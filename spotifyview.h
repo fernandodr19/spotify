@@ -1,11 +1,12 @@
 #ifndef SPOTIFYVIEW_H
 #define SPOTIFYVIEW_H
 
+#include "fancytabwidget.h"
 
-class SpotifyView
+class SpotifyView : public FancyTabWidget
 {
 public:
-    SpotifyView();
+    explicit SpotifyView(QWidget *parent = 0);
 };
 
 #endif // SPOTIFYVIEW_H

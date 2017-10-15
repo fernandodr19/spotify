@@ -1,11 +1,13 @@
 #ifndef USERVIEW_H
 #define USERVIEW_H
 
+#include <QScrollArea>
 
-class UserView
+class UserView : public QScrollArea
 {
+    Q_OBJECT
 public:
-    UserView();
+    explicit UserView(QWidget *parent = 0);
 };
 
 #endif // USERVIEW_H

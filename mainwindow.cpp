@@ -1,12 +1,6 @@
 #include "mainwindow.h"
 
 #include <QDebug>
-#include <QtNetworkAuth>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QGridLayout>
-#include <QLabel>
-#include <QPlainTextEdit>
 
 MainWindow::MainWindow(QWidget *parent) :
     QScrollArea(parent)
@@ -23,9 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
     proxyWidget->setLayout(m_gridLayout);
 
     m_plainText = new QPlainTextEdit();
-
-    m_gridLayout->addWidget(new QLabel("Spotify"),0,0);
-    m_gridLayout->addWidget(m_plainText, 1, 0);
+//    m_gridLayout->addWidget(new QLabel("Spotify"),0,0);
+//    m_gridLayout->addWidget(m_plainText, 1, 0);
 
     spotify.setReplyHandler(new QOAuthHttpServerReplyHandler(8080, this));
     spotify.setAuthorizationUrl(QUrl("https://accounts.spotify.com/authorize"));
@@ -184,6 +177,14 @@ void MainWindow::getTracks()
             }
 
             reply->deleteLater();
+
+            showInterface();
         });
     }
+}
+
+void MainWindow::showInterface()
+{
+    m_spotifyView = new SpotifyView(this);
+    m_gridLayout->addWidget(m_spotifyView, 2, 0);
 }

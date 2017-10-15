@@ -1,11 +1,13 @@
 #ifndef PLAYLISTVIEW_H
 #define PLAYLISTVIEW_H
 
+#include <QScrollArea>
 
-class PlaylistView
+class PlaylistView : public QScrollArea
 {
+    Q_OBJECT
 public:
-    PlaylistView();
+    explicit PlaylistView(QWidget *parent = 0);
 };
 
 #endif // PLAYLISTVIEW_H

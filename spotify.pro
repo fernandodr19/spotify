@@ -27,9 +27,17 @@ SOURCES += main.cpp\
         mainwindow.cpp \
         playlist.cpp \
     track.cpp \
-    user.cpp
+    user.cpp \
+    spotifyview.cpp \
+    fancytabwidget.cpp \
+    userview.cpp \
+    playlistview.cpp
 
 HEADERS  += mainwindow.h \
     playlist.h \
     track.h \
-    user.h
+    user.h \
+    spotifyview.h \
+    fancytabwidget.h \
+    userview.h \
+    playlistview.h
