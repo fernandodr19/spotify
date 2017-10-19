@@ -24,6 +24,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    QOAuth2AuthorizationCodeFlow spotify;
 private slots:
     void granted();
 
@@ -38,8 +39,9 @@ private:
     QPlainTextEdit *m_plainText;
     SpotifyView *m_spotifyView;
 
-    QOAuth2AuthorizationCodeFlow spotify;
     User m_user;
 };
+
+extern MainWindow *mainWindow;
 
 #endif // MAINWINDOW_H

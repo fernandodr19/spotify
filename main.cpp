@@ -15,8 +15,10 @@ int main(int argc, char *argv[])
     qDebug () << QSslSocket::sslLibraryVersionString();
 
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+    mainWindow = new MainWindow();
+    mainWindow->show();
+//    mainWindow = MainWindow;
+//    w.show();
 
     return a.exec();
 }

@@ -2,6 +2,8 @@
 
 #include <QDebug>
 
+MainWindow *mainWindow = nullptr;
+
 MainWindow::MainWindow(QWidget *parent) :
     QScrollArea(parent)
 {
@@ -130,6 +132,8 @@ void MainWindow::getTracks()
             }
 
             const auto data = reply->readAll();
+
+            m_plainText->appendPlainText(data);
 
             const auto document = QJsonDocument::fromJson(data);
             const auto root = document.object();

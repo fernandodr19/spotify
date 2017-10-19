@@ -115,3 +115,4 @@ void UserView::loadPlaylistTracks(const QString &playlistId)
     }
     m_playlistTracks->setVisible(true);
 }
+
